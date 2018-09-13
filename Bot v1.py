@@ -2,15 +2,24 @@ import discord
 import asyncio
 import time
 import random
+#import config as cfg
+#TODO: add config. This will be useful, trust me
 
-client = discord.Client() 
+client = discord.Client()
+
+
+presences = [
+    "with the real Spyro",
+    "catch with a hand grenade"
+]
+presenceChangeTime = 20
 
 async def status_task():
     while True:
-        await client.change_presence("with the real Spyro")
-        await asyncio.sleep(20)
-        await client.change_presence("catch with a hand grenade")
-        await asyncio.sleep(20)
+        newPresence = random.choice(presences)
+        await client.change_presence(str(newPresence))
+        await asyncio.sleep(presenceChangeTime)
+        
 
       
 async def chat(channel, message=None, tts=False, embed=None):
@@ -60,22 +69,20 @@ async def on_message(message):
         await client.send_message(message.channel, "*excited borking*")
     if message.content == "Bad bot":  
         await client.send_message(message.channel, "Well fuck you too")
-    if message.content == "@Spyroboto#4192 ":  
+    if message.content.contains("<@483591622425051136>"):  
         await client.send_message(message.channel, "omg what. Like seriously did you have to ping me? I was taking a cyber nap and you woke me. pings are SO ANNOYING - like especially going live ones, but at least you can supress @ everyones. Did I tell you about the time I got banned from a server with like 30k people? Its true! I was kicked a fair bit before permabanned. Spyro didn't have admin privs, but i did so he just told me to kick people he didn't like lol. I woulda gotten away with it if it weren't for those meddling ~~kids~~ audit logs. Sorry for rambling a bit hope you enjoyed smash like, subscribe, follow and donate all your money. All of it. Right now. Pls :3 ")
     if message.content == ";-;":  
         await client.send_message(message.channel, "this")
-        time.sleep(0.3)
+        await asyncio.sleep(0.3) # dont use time.sleep() in corotines!
         await client.send_message(message.channel, "is")
-        time.sleep(0.3)
+        await asyncio.sleep(0.3)
         await client.send_message(message.channel, "so")
-        time.sleep(0.3)
+        await asyncio.sleep(0.3)
         await client.send_message(message.channel, "sad")
     if message.content == "cool story bro":  
         await client.send_message(message.channel, "tell it again")
     if message.content == "Indeed":  
         await client.send_message(message.channel, "Good meme")
-    if message.content == "":  
-        await client.send_message(message.channel, "F")
     if message.content == "This is so sad":  
         await client.send_message(message.channel, ";-;")
     if message.content == "Alexa":  
@@ -84,10 +91,11 @@ async def on_message(message):
         await client.send_message(message.channel, " ```Ew``` ")
     if message.content == "Hello":  
         await client.send_message(message.channel, "Go away no one likes you")
-    if message.content == "yeet":  
+    if message.content.contains("yeet"):  
         await client.send_message(message.channel, "ok hold up. Did you seriously just say yeet? like what are you, 10 years old? Have you only 3 working brain cells?! Like there must be something genuinely wrond with your brain. When was the last time you had it scanned. Really brings back memories of LONG DEAD MEMES. I mean, 2016 may have been a better time but like do you remember the quilaity of memes? Like that gorilla - all it did was DIE and it became a meme?! Like if that was how it is now i would be liking more of those 'like to instantly die' memes ")
-    if message.content.startswith('Shrek'):
+    if message.content..lower().contains('shrek'):
         await client.kick(message.author)
+        await chat(author, "HAHA") # you might like this
     
 
 
